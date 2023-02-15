@@ -49,6 +49,11 @@ public class Livre extends Ouvrage{
         this.resume = resume;
     }
 
+    public void addAuteur(Auteur a1, Livre l1){
+        a1.getLouvrage().add(l1);
+        l1.getLauteurs().add(a1);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

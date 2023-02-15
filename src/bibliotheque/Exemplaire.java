@@ -77,6 +77,16 @@ public class Exemplaire {
         this.lloc = lloc;
     }
 
+    public void addRayon (Exemplaire e1, Rayon r1){
+        e1.setRayon(r1);
+        r1.getLex().add(e1);
+    }
+
+    public void addExemplaireToLocation(Exemplaire e1, Lecteur lec, Location loc){
+        lec.getLloc().add(loc);
+        e1.getLloc().add(loc);
+    }
+
     @Override
     public String toString() {
         return "Exemplaire{" +

@@ -89,6 +89,11 @@ public class Lecteur {
         this.lloc = lloc;
     }
 
+    public void addLecteurToLocation(Exemplaire e1, Lecteur lec, Location loc){
+        lec.getLloc().add(loc);
+        e1.getLloc().add(loc);
+    }
+
     @Override
     public String toString() {
         return "Lecteur{" +
