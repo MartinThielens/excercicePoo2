@@ -1,24 +1,28 @@
-package bibliotheque;
+package bibliotheque.metier;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
 public class Location {
     private LocalDate dateLocation;
     private LocalDate dateRestitution;
     private Lecteur loueur;
-    private Exemplaire exemplaire;
+    private bibliotheque.metier.Exemplaire exemplaire;
 
-    public Location(LocalDate dateLocation, LocalDate dateRestitution, Lecteur loueur, Exemplaire exemplaire) {
+    public Location(LocalDate dateLocation, LocalDate dateRestitution, Lecteur loueur, bibliotheque.metier.Exemplaire exemplaire) {
         this.dateLocation = dateLocation;
         this.dateRestitution = dateRestitution;
         this.loueur = loueur;
         this.exemplaire = exemplaire;
+        this.loueur.getLloc().add(this);
+        this.exemplaire.getLloc().add(this);
     }
 
-    public Location(Lecteur loueur, Exemplaire exemplaire) {
+    public Location(Lecteur loueur, bibliotheque.metier.Exemplaire exemplaire) {
         this.loueur = loueur;
         this.exemplaire = exemplaire;
+        this.dateLocation=LocalDate.now();
     }
 
     public LocalDate getDateLocation() {
@@ -45,7 +49,7 @@ public class Location {
         this.loueur = loueur;
     }
 
-    public Exemplaire getExemplaire() {
+    public bibliotheque.metier.Exemplaire getExemplaire() {
         return exemplaire;
     }
 
@@ -74,5 +78,20 @@ public class Location {
                 ", loueur=" + loueur +
                 ", exemplaire=" + exemplaire +
                 '}';
+    }
+
+    public double calculerAmende(){
+         if(dateRestitution!=null){
+           LocalDate dateLim = dateLocation.plusDays(exemplaire.getOuvrage().njlocmax());
+           if(dateRestitution.isAfter(dateLim)){
+               int njretard = (int)ChronoUnit.DAYS.between(dateLim, dateRestitution);
+               return exemplaire.getOuvrage().amendeRetard(njretard);
+           }
+       }
+        return 0;
+    }
+
+    public void enregistrerRetour(){
+       if(dateRestitution==null) dateRestitution=LocalDate.now();//test sur nul pour éviter d'enregistrer retour 2 fois
     }
 }

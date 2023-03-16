@@ -1,15 +1,16 @@
-package bibliotheque;
+package bibliotheque.metier;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
-public class Livre extends Ouvrage{
+public class Livre extends Ouvrage {
     private String isbn;
     private int nbrePages;
-    private TypeLivre tl;
+    private bibliotheque.metier.TypeLivre tl;
     private String resume;
 
 
-    public Livre(String titre, int ageMin, String dateParution, double prixLocation, String langue, String genre,String isbn,int nbrePages,TypeLivre tl,String resume) {
+    public Livre(String titre, int ageMin, LocalDate dateParution, double prixLocation, String langue, String genre, String isbn, int nbrePages, bibliotheque.metier.TypeLivre tl, String resume) {
         super(titre, ageMin, dateParution, TypeOuvrage.LIVRE, prixLocation, langue, genre);
         this.isbn=isbn;
         this.nbrePages=nbrePages;
@@ -33,7 +34,7 @@ public class Livre extends Ouvrage{
         this.nbrePages = nbrePages;
     }
 
-    public TypeLivre getTl() {
+    public bibliotheque.metier.TypeLivre getTl() {
         return tl;
     }
 
@@ -47,11 +48,6 @@ public class Livre extends Ouvrage{
 
     public void setResume(String resume) {
         this.resume = resume;
-    }
-
-    public void addAuteur(Auteur a1, Livre l1){
-        a1.getLouvrage().add(l1);
-        l1.getLauteurs().add(a1);
     }
 
     @Override
@@ -68,12 +64,23 @@ public class Livre extends Ouvrage{
     }
 
     @Override
+    public double amendeRetard(int njours) {
+
+        return njours*0.25;
+    }
+
+    @Override
+    public int njlocmax() {
+        return 15;
+    }
+
+    @Override
     public String toString() {
         return super.toString()+ "Livre{" +
                 "isbn='" + isbn + '\'' +
                 ", nbrePages=" + nbrePages +
                 ", tl=" + tl +
                 ", resume='" + resume + '\'' +
-                "} " + super.toString();
+                "} " ;
     }
 }

@@ -1,9 +1,7 @@
-package bibliotheque;
+package bibliotheque.metier;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Lecteur {
     private int numlecteur;
@@ -13,7 +11,7 @@ public class Lecteur {
     private String mail;
     private String tel;
 
-    private List<Location> lloc=new ArrayList<>();
+    private List<bibliotheque.metier.Location> lloc=new ArrayList<>();
 
     public Lecteur(int numlecteur, String nom, String prenom, LocalDate dn, String adresse, String mail, String tel) {
         this.numlecteur = numlecteur;
@@ -81,17 +79,12 @@ public class Lecteur {
         this.tel = tel;
     }
 
-    public List<Location> getLloc() {
+    public List<bibliotheque.metier.Location> getLloc() {
         return lloc;
     }
 
-    public void setLloc(List<Location> lloc) {
+    public void setLloc(List<bibliotheque.metier.Location> lloc) {
         this.lloc = lloc;
-    }
-
-    public void addLecteurToLocation(Exemplaire e1, Lecteur lec, Location loc){
-        lec.getLloc().add(loc);
-        e1.getLloc().add(loc);
     }
 
     @Override
@@ -118,5 +111,21 @@ public class Lecteur {
     @Override
     public int hashCode() {
         return Objects.hash(numlecteur);
+    }
+
+    public List<bibliotheque.metier.Exemplaire> listerExemplairesEnLocation(){
+        List<bibliotheque.metier.Exemplaire> lex = new ArrayList<>();
+        for(bibliotheque.metier.Location loc : lloc){
+            if(loc.getDateRestitution()!=null)lex.add(loc.getExemplaire());
+        }
+        return lex;
+    }
+
+    public Set<bibliotheque.metier.Exemplaire> listerExemplairesLoues(){
+        Set<Exemplaire> stex = new HashSet<>();
+        for(Location loc : lloc){
+            stex.add(loc.getExemplaire());
+        }
+       return stex;
     }
 }

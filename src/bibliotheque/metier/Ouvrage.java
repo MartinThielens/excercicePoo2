@@ -1,13 +1,14 @@
-package bibliotheque;
+package bibliotheque.metier;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Ouvrage {
     protected String titre;
     protected int ageMin;
-    protected String dateParution;
-    protected TypeOuvrage to;
+    protected LocalDate dateParution;
+    protected bibliotheque.metier.TypeOuvrage to;
     protected double prixLocation;
     protected String langue;
     protected String genre;
@@ -16,7 +17,7 @@ public abstract class Ouvrage {
     protected List<Exemplaire> lex = new ArrayList<>();
 
 
-    public Ouvrage(String titre, int ageMin, String dateParution, TypeOuvrage to, double prixLocation, String langue, String genre) {
+    public Ouvrage(String titre, int ageMin, LocalDate dateParution, bibliotheque.metier.TypeOuvrage to, double prixLocation, String langue, String genre) {
         this.titre = titre;
         this.ageMin = ageMin;
         this.dateParution = dateParution;
@@ -42,15 +43,15 @@ public abstract class Ouvrage {
         this.ageMin = ageMin;
     }
 
-    public String getDateParution() {
+    public LocalDate getDateParution() {
         return dateParution;
     }
 
-    public void setDateParution(String dateParution) {
+    public void setDateParution(LocalDate dateParution) {
         this.dateParution = dateParution;
     }
 
-    public TypeOuvrage getTo() {
+    public bibliotheque.metier.TypeOuvrage getTo() {
         return to;
     }
 
@@ -98,6 +99,11 @@ public abstract class Ouvrage {
         this.lex = lex;
     }
 
+
+    public abstract double amendeRetard(int njours);
+
+    public abstract int njlocmax();
+
     @Override
     public String toString() {
         return "Ouvrage{" +
@@ -109,5 +115,34 @@ public abstract class Ouvrage {
                 ", langue='" + langue + '\'' +
                 ", genre='" + genre + '\'' +
                 '}';
+    }
+    public void addAuteur(Auteur a ){
+        lauteurs.add(a);
+        a.getLouvrage().add(this);
+    }
+
+    public void remove(Auteur a){
+        lauteurs.remove(a);
+        a.getLouvrage().remove(this);
+    }
+    public void addExemplaire(Exemplaire e){
+        lex.add(e);
+        e.setOuvrage(this);
+    }
+
+    public void remove(Exemplaire e){
+        lex.remove(e);
+        e.setOuvrage(null);
+    }
+    public List<Exemplaire>listerExemplaires(){
+        return lex;
+    }
+
+    public List<Exemplaire>listerExemplaires(boolean enLocation){
+        List<Exemplaire> lex2 = new ArrayList<>();
+        for(Exemplaire ex : lex){
+            if(ex.enLocation()==enLocation) lex2.add(ex);
+        }
+        return lex2;
     }
 }
