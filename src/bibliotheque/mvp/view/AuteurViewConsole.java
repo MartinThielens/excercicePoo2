@@ -1,7 +1,7 @@
 package bibliotheque.mvp.view;
 
-import bibliotheque.metier.Lecteur;
-import bibliotheque.mvp.presenter.LecteurPresenter;
+import bibliotheque.metier.Auteur;
+import bibliotheque.mvp.presenter.AuteurPresenter;
 import bibliotheque.utilitaires.Utilitaire;
 
 import java.time.LocalDate;
@@ -10,24 +10,26 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-public class LecteurViewConsole implements LecteurViewInterface {
-    private LecteurPresenter presenter;
-    private List<Lecteur> llec;
+public class AuteurViewConsole implements AuteurViewInterface {
+
+
+    private AuteurPresenter presenter;
+    private List<Auteur> laut;
     private Scanner sc = new Scanner(System.in);
 
-    public LecteurViewConsole() {
+    public AuteurViewConsole() {
 
     }
 
     @Override
-    public void setPresenter(LecteurPresenter presenter) {
+    public void setPresenter(AuteurPresenter presenter) {
         this.presenter = presenter;
     }
 
     @Override
-    public void setListDatas(List<Lecteur> lecteurs) {
-        this.llec = lecteurs;
-        Utilitaire.affListe(llec);
+    public void setListDatas(List<Auteur> auteurs) {
+        this.laut = auteurs;
+        Utilitaire.affListe(laut);
         menu();
     }
 
@@ -59,14 +61,14 @@ public class LecteurViewConsole implements LecteurViewInterface {
 
     private void modifier() {
         //TODO choisir elt et demander les nouvelles valeurs puis appeler méthode maj(lecteur) (à développer) du presenter
-        int choix = Utilitaire.choixElt(llec);
-        Lecteur lecteur = llec.get(choix-1);
+        int choix = Utilitaire.choixElt(laut);
+        Auteur auteur = laut.get(choix - 1);
     }
 
     private void retirer() {
-        int choix = Utilitaire.choixElt(llec);
-        Lecteur lecteur = llec.get(choix-1);
-        presenter.removeLecteur(lecteur);
+        int choix = Utilitaire.choixElt(laut);
+        Auteur auteur = laut.get(choix - 1);
+        presenter.removeAuteur(auteur);
     }
 
 
@@ -75,20 +77,10 @@ public class LecteurViewConsole implements LecteurViewInterface {
         String nom = sc.nextLine();
         System.out.println("prénom ");
         String prenom = sc.nextLine();
-        System.out.println("date de naissance");
-        String[] jma = sc.nextLine().split(" ");
-        int j = Integer.parseInt(jma[0]);
-        int m = Integer.parseInt(jma[1]);
-        int a = Integer.parseInt(jma[2]);
-        LocalDate dn = LocalDate.of(a, m, j);
-        System.out.println("adresse");
-        String adr = sc.nextLine();
-        System.out.println("mail");
-        String mail = sc.nextLine();
-        System.out.println("tel ");
-        String tel = sc.nextLine();
-        Lecteur lec = new Lecteur(0, nom, prenom, dn, adr, mail, tel);
-        presenter.addLecteur(lec);
+        System.out.println("nationalité");
+        String nat = sc.nextLine();
+
+        Auteur aut = new Auteur(nom, prenom,nat);
+        presenter.addAuteur(aut);
     }
 }
-
