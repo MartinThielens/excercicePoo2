@@ -21,6 +21,10 @@ public class LecteurPresenter {
         view.setListDatas(lecteurs);
     }
 
+    public List<Lecteur> getAll(){
+        return model.getLecteurs();
+    }
+
     public void addLecteur(Lecteur lecteur) {
         Lecteur lec = model.addLecteur(lecteur);
         if(lec!=null) view.affMsg("création de :"+lec);
@@ -36,5 +40,12 @@ public class LecteurPresenter {
         else view.affMsg("lecteur non effacé");
         List<Lecteur> lecteurs = model.getLecteurs();
         view.setListDatas(lecteurs);
+    }
+
+    public void update(Lecteur lecteur) {
+        Lecteur l  =model.updateLecteur(lecteur);
+        if(l==null) view.affMsg("mise à jour infrucueuse");
+        else view.affMsg("mise à jour effectuée : "+l);
+        //view.setListDatas(model.getClients());//désactivé pour éviter appels imbriqués
     }
 }

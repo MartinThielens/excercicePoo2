@@ -2,14 +2,15 @@ package bibliotheque.utilitaires;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
 
 public class Utilitaire {
     private static Scanner sc = new Scanner(System.in);
     public static int choixListe(List l){
-       affListe(l);
-       return choixElt(l);
+        affListe(l);
+        return choixElt(l);
     }
 
     public static void affListe(List l){
@@ -44,4 +45,18 @@ public class Utilitaire {
         int s = Integer.parseInt(hms[2]);
         return LocalTime.of(h,m,s);
     }
+
+    public static String getDateFrench(LocalDate d){
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("d MM yyyy");
+        return dtf.format(d);
+    }
+
+    public static String modifyIfNotBlank(String label,String oldValue){
+        System.out.println(label+" : "+oldValue);
+        System.out.print("nouvelle valeur (enter si pas de changement) : ");
+        String newValue= sc.nextLine();
+        if(newValue.isBlank()) return oldValue;
+        return newValue;
+    }
+
 }
