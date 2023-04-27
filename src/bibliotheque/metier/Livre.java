@@ -6,11 +6,11 @@ import java.util.Objects;
 public class Livre extends Ouvrage {
     private String isbn;
     private int nbrePages;
-    private bibliotheque.metier.TypeLivre tl;
+    private TypeLivre tl;
     private String resume;
 
 
-    public Livre(String titre, int ageMin, LocalDate dateParution, double prixLocation, String langue, String genre, String isbn, int nbrePages, bibliotheque.metier.TypeLivre tl, String resume) {
+    public Livre(String titre, int ageMin, LocalDate dateParution, double prixLocation, String langue, String genre, String isbn, int nbrePages, TypeLivre tl, String resume) throws Exception{
         super(titre, ageMin, dateParution, TypeOuvrage.LIVRE, prixLocation, langue, genre);
         this.isbn=isbn;
         this.nbrePages=nbrePages;
@@ -34,7 +34,7 @@ public class Livre extends Ouvrage {
         this.nbrePages = nbrePages;
     }
 
-    public bibliotheque.metier.TypeLivre getTl() {
+    public TypeLivre getTl() {
         return tl;
     }
 

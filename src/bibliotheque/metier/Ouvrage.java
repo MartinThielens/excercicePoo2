@@ -8,16 +8,17 @@ public abstract class Ouvrage {
     protected String titre;
     protected int ageMin;
     protected LocalDate dateParution;
-    protected bibliotheque.metier.TypeOuvrage to;
+    protected TypeOuvrage to;
     protected double prixLocation;
     protected String langue;
     protected String genre;
 
     protected List<Auteur> lauteurs=new ArrayList<>();
-    protected List<Exemplaire> lex = new ArrayList<>();
+    protected List<bibliotheque.metier.Exemplaire> lex = new ArrayList<>();
 
 
-    public Ouvrage(String titre, int ageMin, LocalDate dateParution, bibliotheque.metier.TypeOuvrage to, double prixLocation, String langue, String genre) {
+    public Ouvrage(String titre, int ageMin, LocalDate dateParution, TypeOuvrage to, double prixLocation, String langue, String genre)throws Exception {
+       if(titre==null || titre.trim().equals("")) throw new Exception("titre invalide");
         this.titre = titre;
         this.ageMin = ageMin;
         this.dateParution = dateParution;
@@ -51,7 +52,7 @@ public abstract class Ouvrage {
         this.dateParution = dateParution;
     }
 
-    public bibliotheque.metier.TypeOuvrage getTo() {
+    public TypeOuvrage getTo() {
         return to;
     }
 
@@ -91,11 +92,11 @@ public abstract class Ouvrage {
         this.lauteurs = lauteurs;
     }
 
-    public List<Exemplaire> getLex() {
+    public List<bibliotheque.metier.Exemplaire> getLex() {
         return lex;
     }
 
-    public void setLex(List<Exemplaire> lex) {
+    public void setLex(List<bibliotheque.metier.Exemplaire> lex) {
         this.lex = lex;
     }
 
@@ -125,24 +126,25 @@ public abstract class Ouvrage {
         lauteurs.remove(a);
         a.getLouvrage().remove(this);
     }
-    public void addExemplaire(Exemplaire e){
+    public void addExemplaire(bibliotheque.metier.Exemplaire e){
         lex.add(e);
         e.setOuvrage(this);
     }
 
-    public void remove(Exemplaire e){
+    public void remove(bibliotheque.metier.Exemplaire e){
         lex.remove(e);
         e.setOuvrage(null);
     }
-    public List<Exemplaire>listerExemplaires(){
+    public List<bibliotheque.metier.Exemplaire>listerExemplaires(){
         return lex;
     }
 
-    public List<Exemplaire>listerExemplaires(boolean enLocation){
-        List<Exemplaire> lex2 = new ArrayList<>();
+    public List<bibliotheque.metier.Exemplaire>listerExemplaires(boolean enLocation){
+        List<bibliotheque.metier.Exemplaire> lex2 = new ArrayList<>();
         for(Exemplaire ex : lex){
             if(ex.enLocation()==enLocation) lex2.add(ex);
         }
         return lex2;
     }
+
 }

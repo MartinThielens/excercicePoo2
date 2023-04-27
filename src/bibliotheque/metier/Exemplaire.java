@@ -6,21 +6,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Exemplaire {
+public class Exemplaire  {
 
     private String matricule;
     private String descriptionEtat;
 
-    private bibliotheque.metier.Ouvrage ouvrage;
+    private Ouvrage ouvrage;
     private Rayon rayon;
 
     private String etat;
 
 
+
     private List<Location> lloc= new ArrayList<>();
 
 
-    public Exemplaire(String matricule, String descriptionEtat, bibliotheque.metier.Ouvrage ouvrage){
+    public Exemplaire(String matricule, String descriptionEtat,Ouvrage ouvrage) throws Exception {
+        if(ouvrage==null) throw new Exception("ouvrage invalide");
         this.matricule = matricule;
         this.descriptionEtat=descriptionEtat;
         this.ouvrage = ouvrage;
@@ -57,7 +59,7 @@ public class Exemplaire {
         this.descriptionEtat = descriptionEtat;
     }
 
-     public bibliotheque.metier.Ouvrage getOuvrage() {
+     public Ouvrage getOuvrage() {
         return ouvrage;
     }
 
@@ -112,7 +114,7 @@ public class Exemplaire {
         return null;
     }
 
-    public void envoiMailLecteurActuel(Mail mail){
+    public void envoiMailLecteurActuel(bibliotheque.metier.Mail mail){
         if(lecteurActuel()!=null) System.out.println("envoi de "+mail+ " à "+lecteurActuel().getMail());
         else System.out.println("aucune location en cours");
     }

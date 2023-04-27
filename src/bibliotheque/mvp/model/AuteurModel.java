@@ -1,33 +1,25 @@
 package bibliotheque.mvp.model;
 
 import bibliotheque.metier.Auteur;
+import bibliotheque.metier.Livre;
+import bibliotheque.metier.Ouvrage;
+import bibliotheque.metier.TypeLivre;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class AuteurModel implements DAOAuteur {
-
-    private List<Auteur> auteurs = new ArrayList<>();
-
+public class AuteurModel extends AbstractModel<Auteur> implements SpecialAuteur {
     @Override
-    public Auteur addAuteur(Auteur aut) {
-        boolean present = auteurs.contains(aut);
-        if (!present) {
-            auteurs.add(aut);
-            return aut;
-        } else return null;
+    public List<Ouvrage> listerOuvrages(Auteur a) {
+        return a.listerOuvrages();
     }
 
     @Override
-    public boolean removeAuteur(Auteur aut) {
-        return auteurs.remove(aut);
+    public List<Livre> listerLivre(Auteur a, TypeLivre tl) {
+        return a.listerLivres(tl);
     }
 
     @Override
-    public List<Auteur> getAuteurs() {
-        return new ArrayList<>(auteurs);
+    public List<Ouvrage> listerOuvrages(Auteur a, String genre) {
+        return a.listerOuvrages(genre);
     }
 }
-
-
-
